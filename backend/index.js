@@ -1,0 +1,29 @@
+const PORT = 4000
+const express = require('express')
+const cors = require('cors')
+const mongoose = require('mongoose')
+
+const app = express()
+app.use(express.json())
+app.use(cors())
+app.use(express.urlencoded())
+
+const Login = require('./Routes/login')
+const Register = require('./Routes/register')
+
+mongoose.connect("mongodb://localhost:27017/Aided-Database",{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then((connected)=> {
+        console.log("DataBase Connected");
+        app.listen(PORT,()=>{
+            console.log(`started at port ${PORT}`)
+        })
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+
+app.use("/login",Login)
+app.use("/register",Register)
