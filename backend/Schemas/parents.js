@@ -6,7 +6,6 @@ const parents = new Schema(
         Parent_name:String,
         Child_name:String,
         Child_age:String,
-        City:String,
         Email:String,
         Password:String,
         Contact:String

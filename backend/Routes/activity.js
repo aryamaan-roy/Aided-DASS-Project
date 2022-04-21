@@ -3,6 +3,19 @@ const router = express.Router();
 const Therapist = require("./../Schemas/therapist");
 const Parents = require("./../Schemas/parents");
 const Activity = require("./../Schemas/activity");
+const Parent_link = require("./../Schemas/parent_therapist");
+
+router.post("/get_activity", (req, res) => {
+    const {Therapist_id} = req.body;
+    Activity.find({Therapist_id: String(Therapist_id)}, (err, activity) => {
+        if (err) {
+            res.send(err);
+        } else {
+            return res.status(200).json(activity);
+        }
+    });
+});
+
 
 router.post("/create_activity", (req, res) => {
     const {

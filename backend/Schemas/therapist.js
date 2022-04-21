@@ -4,13 +4,29 @@ const Schema = mongoose.Schema;
 
 const therapist = new Schema(
     {
-        Name:String,
-        Age:String,
-        Experience:String,
-        Qualification:String,
-        Email:String,
-        Password:String,
-        Contact:String
+        Name:{
+            type :String,
+            required:true},
+        Age:{
+            type :String,
+            required:true},
+
+        Experience:{
+            type:String,
+            required:true},
+        
+        Qualification:{
+            type:String,
+            required:true},
+        Email:{
+            type:String,
+            required:true},
+        Password:{
+            type:String,
+            required:true},
+        Contact:{
+            type:String,
+            required:true},
     }
 )
 

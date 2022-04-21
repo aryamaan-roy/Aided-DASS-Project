@@ -9,7 +9,6 @@ router.post("/register-parents" , (req,res)=>{
     const { Parent_name,
         Child_name,
         Child_age,
-        City,
         Email,
         Password,
         Contact  } = req.body
@@ -25,7 +24,6 @@ router.post("/register-parents" , (req,res)=>{
             Parent_name,
             Child_name,
             Child_age,
-            City,
             Email,
             Password,
             Contact

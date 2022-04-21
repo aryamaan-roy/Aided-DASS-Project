@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 
 const grade_schema = new Schema(
     {
-        Parent_id : String,
+        Child_name : String,
         grade_letter:String,
-        Activity_id : String,
-        Comment : String,
+        Activity_name : String,
+        Comment_text : String,
+        Therapist_name : String,
     }
 )
 
