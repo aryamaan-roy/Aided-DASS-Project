@@ -90,8 +90,12 @@ export default function Activities_page() {
     let rows = []
     useEffect(() => {
 
+        const therapist_detail = {
+            Therapist_id: String(localStorage.getItem("id")),
+        };
+
         axios
-            .get("http://localhost:4000/activity")
+            .post("http://localhost:4000/activity/get_activity",therapist_detail)
             .then((response) => {
                 if (response.status == 200) {
                     set_all_activity(response.data);
@@ -127,6 +131,9 @@ export default function Activities_page() {
                         <Box sx={{ flexGrow: 1 }} />
                         <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
                             Home
+                        </Button>
+                        <Button color="inherit" onClick={() => window.location.href = "/t_grade"}>
+                            Grade
                         </Button>
                         <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
                             Activities

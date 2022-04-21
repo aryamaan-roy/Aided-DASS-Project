@@ -46,6 +46,9 @@ export default function Therapist_home() {
             <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
               Home
             </Button>
+            <Button color="inherit" onClick={() => window.location.href = "/t_grade"}>
+                            Grade
+                        </Button>
             <Button color="inherit" onClick={() => window.location.href = "/t_activity"}>
               Activities
             </Button>
