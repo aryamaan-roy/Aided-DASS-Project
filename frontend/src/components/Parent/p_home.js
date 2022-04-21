@@ -57,7 +57,7 @@ export default function Parent_home() {
       Therapist_name : therapist_name
   };
   axios
-            .post("http://localhost:4000/grade/add_link", new_link)
+            .post("http://localhost:4000/link/add_link", new_link)
             .then((response) => {
                 if (response.status == 404) {
                     alert("Already chosen");
@@ -92,11 +92,11 @@ export default function Parent_home() {
             <Button color="inherit" onClick={() => window.location.href = "/p_home"}>
               Home
             </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/p_home"}>
-              Child Timetable
+            <Button color="inherit" onClick={() => window.location.href = "/p_my_therapist"}>
+              My Therapists
             </Button>
             <Button color="inherit" onClick={() => window.location.href = "/p_home"}>
-              Progress
+              Grades
             </Button>
             <Button color="inherit" onClick={() => window.location.href = "/register"}>
               Register

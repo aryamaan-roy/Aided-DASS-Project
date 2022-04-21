@@ -3,396 +3,249 @@ import axios from "axios";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Sidebar from "../templates/Sidebar";
-import backgroundImage from "../images/reg.jpeg";
-import ButtonGrad from "../images/button_gradient.jpeg";
+import { useNavigate } from "react-router-dom";
+import Link from '@mui/material/Link';
 
-const Userform = (props) => {
-  const [parentname, setParentName] = useState("");
-  const [childname, setChildName] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [contact, setContact] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [experience, setExp] = useState("")
-  const [qualification, setQual] = useState("")
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const handleChange = (e) => {
-    if (e.target.name === "name") {
-      setName(e.target.value);
-    } else if (e.target.name === "email") {
-      setEmail(e.target.value);
-    } else if (e.target.name === "password") {
-      setPassword(e.target.value);
-    }  else if (e.target.name === "parentname"){
-      setParentName(e.target.value);
-    }else if (e.target.name === "childname"){
-      setChildName(e.target.value);
-    }else if (e.target.name === "age"){
-      setAge(e.target.value);
-    }else if (e.target.name === "contact"){
-      setContact(e.target.value);
-    }else if (e.target.value === "experience"){
-      setExp(e.target.value);
-    }else if (e.target.value === "qualification"){
-      setQual(e.target.value);
-    }
-
-
-  };
-
-  if (props.user === "Parent") {
-    return (
-      <div style = {{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "20px",
-        marginBottom: "20px",
-        marginLeft: "20px",
-        marginRight: "20px",
-      }}
-
-      >
-        {/* // form to take name, child name, email, password, confirm password, and date of birth of child  */}
-        <Grid container spacing={3}>
-        <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name=" Parents Name"
-              label="Parents Name"
-              id="parentname"
-              autoComplete="ParentName"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name=" Childs Name"
-              label="Childs Name"
-              id="childname"
-              autoComplete="ChildName"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="age"
-              label="Age"
-              type="number"
-              id="age"
-              autoComplete="age"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="Contact"
-              label="Contact"
-              type="number"
-              id="contact"
-              autoComplete="contact"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="email"
-              label="Email"
-              type="email"
-              id="email"
-              autoComplete="email"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <form onSubmit={onSubmit}>
-              <Button variant="contained" color="primary">
-                Register
-              </Button>
-            </form>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
-  if (props.user === "Therapist") {
-    return (
-      <div style = {{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "20px",
-        marginBottom: "20px",
-        marginLeft: "20px",
-        marginRight: "20px",
-      }}
-
-      >
-        {/* // form to take name, child name, email, password, confirm password, and date of birth of child  */}
-        <Grid container spacing={3}>
-        <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="Name"
-              label="Name"
-              id="name"
-              autoComplete="Name"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="Qualification"
-              label="Qualification"
-              id="qualification"
-              autoComplete="Qualification"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="Experience"
-              label="Experience"
-              type="number"
-              id="experience"
-              autoComplete="experience"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="Contact"
-              label="Contact"
-              type="number"
-              id="contact"
-              autoComplete="contact"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="email"
-              label="Email"
-              type="email"
-              id="email"
-              autoComplete="email"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <form onSubmit={onSubmit}>
-              <Button variant="contained" color="primary">
-                Register
-              </Button>
-            </form>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
-  return <div></div>;
-};
 
 const Register = (props) => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [user, setUser] = useState("");
-  const [date, setDate] = useState(null);
+  const [contact, setContact] = useState("");
+  const [age, setAge] = useState("");
+  const [password, setPassword] = useState("");
+  const [choice, setChoice] = useState("");
+  const [parent_name, setParent_name] = useState("")
+  const [child_name, setChild_name] = useState("")
+  const [experience, setExp] = useState("")
+  const [qualification, setQual] = useState("")
+  const [city, setCity] = useState("")
 
   const onChangeUsername = (event) => {
     setName(event.target.value);
+  };
+  
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+  const onChangeChoice = (event) => {
+    setChoice(event.target.value);
   };
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
   };
 
+  const onChangeAge = (event) => {
+    setAge(event.target.value);
+  };
+
+  const onChangeContact = (event) => {
+    setContact(event.target.value);
+  };
+  const onChangeparentname = (event) => {
+    setParent_name(event.target.value)
+  };
+  const onChangechildname = (event) => {
+    setChild_name(event.target.value)
+  };
+  const onChangeExperience = (event) => {
+    setExp(event.target.value)
+  };
+  const onChangeQualification = (event) => {
+    setQual(event.target.value)
+  };
+  const onChangecity = (event) => {
+    setCity(event.target.value)
+  };
+
   const resetInputs = () => {
     setName("");
     setEmail("");
-    setDate(null);
+    setContact("");
+    setAge("");
+    setPassword("");
+    setChoice("");
+    setCity("");
+    setQual("");
+    setExp("");
+    setParent_name("");
+    setChild_name("");
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-
-    const newUser = {
-      name: name,
-      email: email,
-      date: Date.now(),
-    };
+    if(choice === "Parent")
+    {
+      const newParent = 
+      { Parent_name : parent_name,
+        Child_name : child_name,
+        Child_age : age,
+        Email : email,
+        Password : password,
+        Contact : contact };
 
     axios
-      .post("http://localhost:4000/user/register", newUser)
+      .post("http://localhost:4000/register/register-parents", newParent)
       .then((response) => {
-        alert("Created\t" + response.data.name);
-        console.log(response.data);
+        alert(String(response.data));
       });
-
+    }
+    else
+    {
+      
+      const newTherapist  = { Name : name,
+        Age:age,
+        Experience:experience,
+        Qualification:qualification,
+        Email:email,
+        Password:password,
+        Contact :contact};
+      
+        axios
+      .post("http://localhost:4000/register/register-therapist", newTherapist)
+      .then((response) => {
+        alert(response.data);
+      });
+    }
     resetInputs();
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "flex-start",
-        // insert full background image
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-      }}
-    >
-      <Sidebar />
-      <div
-        style={{
-          // place the div in center
-          marginTop: "150px",
-          float: "center",
-          height: "400px",
-          width: "300px",
-          // filter: "blur(5px)",
-          filter: "drop-shadow(0px 10px -14px 14px #FFF)",
-          boxShadow: "0px 10px -14px 14px #FFF",
-          borderRadius: "10px",
-          padding: "20px",
-          paddingTop: "30px",
-          paddingBottom: "30px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          background: "#ffffff75",
-        }}
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Button onClick={() => setUser("Parent")}>Parent</Button>
+    <Grid container align={"center"} spacing={2}>
+      
+      <Grid item xs={12}>
+        <Button variant="contained" value="Therapist" onClick={onChangeChoice}>Therapist</Button>
+        <Button variant="contained" value="Parent" onClick={onChangeChoice}>Parent</Button>
+      </Grid>
+      {choice === "Therapist" ? (
+        <>
+        <Grid item xs={12}>
+        <TextField
+          label="Name"
+          variant="outlined"
+          value={name}
+          onChange={onChangeUsername}
+        />
+      </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Age"
+              variant="outlined"
+              value={age}
+              onChange={onChangeAge}
+            />
           </Grid>
-          <Grid item xs={6}>
-            <Button onClick={() => setUser("Therapist")}>Therapist</Button>
+          <Grid item xs={12}>
+        <TextField
+          label="Experience"
+          variant="outlined"
+          value={experience}
+          onChange={onChangeExperience}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="qualification"
+          variant="outlined"
+          value={qualification}
+          onChange={onChangeQualification}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Email"
+          variant="outlined"
+          value={email}
+          onChange={onChangeEmail}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Password"
+          variant="outlined"
+          value={password}
+          onChange={onChangePassword}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Contact"
+          variant="outlined"
+          value={contact}
+          onChange={onChangeContact}
+        />
+      </Grid>
+         </>) : (<>
+
+
+          <Grid item xs={12}>
+        <TextField
+          label="Parent Name"
+          variant="outlined"
+          value={parent_name}
+          onChange={onChangeparentname}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Child Name"
+          variant="outlined"
+          value={child_name}
+          onChange={onChangechildname}
+        />
+      </Grid>
+      <Grid item xs={12}>
+            <TextField
+              label="Age"
+              variant="outlined"
+              value={age}
+              onChange={onChangeAge}
+            />
           </Grid>
-          <Userform user={user} />
+      <Grid item xs={12}>
+        <TextField
+          label="Email"
+          variant="outlined"
+          value={email}
+          onChange={onChangeEmail}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Password"
+          variant="outlined"
+          value={password}
+          onChange={onChangePassword}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Contact"
+          variant="outlined"
+          value={contact}
+          onChange={onChangeContact}
+        />
+      </Grid>
+          </>)
+      }
+
+      <Grid item xs={12}>
+        <Button variant="contained" onClick={onSubmit}>
+          Register
+        </Button>
+      </Grid>
+
+
+      <Grid container justifyContent="flex-end">
+        <Grid item>
+          <Link href="#" variant="body2" onClick={() => navigate("/signin")}>
+            Already have an account? Sign in
+          </Link>
         </Grid>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
 export default Register;
-
-// import { display } from "@mui/system";
-// import { useState } from "react";
-
-// const Register = (props) => {
-
-//   const [age, setAge] = useState(0);
-//   const [salary, setSalary] = useState(0);
-
-//   const onChangeAge = (event) => {
-//     setAge(event.target.value);
-//   }
-
-//   const onChangeSalary = (event) => {
-//     setSalary(event.target.value);
-//   }
-
-//   const resetInputs = () => {
-//     setAge("");
-//     setSalary("");
-//   }
-
-//   const onSubmit = (event) => {
-//     event.preventDefault();
-//   }
-
-//   return (
-//     <div>
-//       <div style = {{
-//         width: "25%",
-//         height: "100vh",
-//         display: "flex",
-//         flexDirection: "column",
-//         justifyContent: "center",
-//         alignItems: "center",
-//       }}
-//       >
-//         <form onSubmit={onSubmit} style={{
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "center",
-//         }}
-//         >
-//           <input
-//             type="text"
-//             placeholder="Age"
-//             value={age}
-//             onChange={onChangeAge}
-//             style={{
-//               marginBottom: "10px",
-//             }}
-//           />
-//           <input
-//             type="text"
-//             placeholder="Salary"
-//             value={salary}
-//             onChange={onChangeSalary}
-//             style={{
-//               marginBottom: "10px",
-//             }}
-//           />
-//           <button type="submit">Submit</button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Register;
