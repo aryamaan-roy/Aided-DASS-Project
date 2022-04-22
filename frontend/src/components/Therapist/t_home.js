@@ -21,7 +21,8 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-
+import Sidebar from "../templates/Therapist_Sidebar";
+import backgroundImage from '../images/therapist.jpg';
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function Therapist_home() {
@@ -47,9 +48,20 @@ export default function Therapist_home() {
   }, []);
 
   return (
+    <div style = {{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      height: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+    }}
+    >
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <Sidebar/>
+        {/* <AppBar position="static">
           <Toolbar>
             <Typography
               variant="h6"
@@ -79,14 +91,21 @@ export default function Therapist_home() {
               Logout
             </Button>
           </Toolbar>
-        </AppBar>
-      </Box><br></br><br></br>
-      <h1 align="center">My Children</h1>
+        </AppBar> */}
+      </Box><br></br>
+      <h1 align="center"  style = {{
+        color: '#986cab',
+        fontSize: '30px',
+        fontFamily: 'Montserrat',
+      }}>Children under you</h1>
       <div className="App" align="center">
         {all_links === "" ? (<> No therapists </>) : (<>
           {all_links.map(item => (
             <>
-              <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+              <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }} style = {{
+                opacity: 0.8,
+                backgroundColor: '#e5d7f5',
+              }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm container>
                     <Grid item xs container direction="column" spacing={2}>
@@ -99,9 +118,11 @@ export default function Therapist_home() {
                   </Grid>
                 </Grid>
               </Paper>
+              <br></br>
             </>
           ))}
         </>)}</div>
     </>
+    </div>
   );
 }

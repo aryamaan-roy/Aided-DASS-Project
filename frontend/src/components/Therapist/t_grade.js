@@ -24,7 +24,10 @@ import TextField from "@mui/material/TextField";
 import { FormControlLabel } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import { Checkbox } from '@mui/material';
+import Sidebar from "../templates/Therapist_Sidebar";
+import backgroundImage from '../images/therapist.jpg';
 import { DataGrid } from '@mui/x-data-grid';
+import { Dialog } from '@mui/material';
 export default function Grades_page() {
     if (localStorage.getItem("id") === null || localStorage.getItem("choice") != "Therapist") {
         window.location.href = "/signin";
@@ -86,6 +89,8 @@ export default function Grades_page() {
                 }
                 window.location.reload();
             });
+        setOpen(false);
+
     };
 
     useEffect(() => {
@@ -121,60 +126,63 @@ export default function Grades_page() {
             });
     }, []);
 
+
+    const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+  };
+
     return (
+        <div style = {{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            width: '100%',
+            height: '100vh',
+            position: 'relative',
+            overflow: 'hidden',
+
+        }}>
         <>
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{ cursor: "pointer" }}
-                            onClick={() => window.location.href = "/"}
-                        >
-                            Therapist Portal
-                        </Typography>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
-                            Home
-                        </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/t_grade"}>
-                            Grade
-                        </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/t_message"}>
-                            Messages
-                        </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
-                            Activities
-                        </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/register"}>
-                            Register
-                        </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/signin"}>
-                            Logout
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-            </Box><br></br><br></br>
+                <Sidebar/>
+            </Box><br></br>
             <div className="App" align="center">
                 <Button
                     type="submit"
                     width="50%"
                     variant="contained"
                     sx={{ mt: 3, mb: 3 }}
-                    onClick={change_isadd}
+                    onClick={handleClickOpen}
+                    style = {{
+                        backgroundColor: '#3f51b5',
+                    }}
                 >
                     Grade Student
                 </Button>
-                {is_add == true ?
-                    (
-                        <>
-                            <br></br>
+                <Dialog open={open} onClose={handleClose} style = {{
+              }}>
+                <br></br>
+                {/* {is_add == true ?
+                    ( */}
 
-                            <Typography variant="h5">Grade Portal</Typography>
-                            <form>
+                            <Typography variant="h5" style = {{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}>Grade Portal</Typography>
+                            <form style = {{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}>
                                 <br /><br />
-                                <FormControl>
+                                <FormControl >
                                     <InputLabel id="demo-simple-select-label">Child Name</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
@@ -182,7 +190,10 @@ export default function Grades_page() {
                                         value={current_child_name}
                                         label="Child Name"
                                         onChange={onChange_child}
-                                        fullWidth
+                                        style = {{
+                                            width: '200px',
+                                        }
+                                        }
                                     >
                                         {all_children.map(child => (
                                             <MenuItem value={child["Child_name"]}>{child["Child_name"]}</MenuItem>
@@ -198,6 +209,10 @@ export default function Grades_page() {
                                         value={current_activity_name}
                                         label="Activity"
                                         onChange={onChange_activity}
+                                        style = {{
+                                            width: '200px',
+                                        }
+                                        }
                                     >
                                         {all_activity.map(activity => (
                                             <MenuItem value={activity["Name"]}>{activity["Name"]}</MenuItem>
@@ -213,6 +228,10 @@ export default function Grades_page() {
                                         value={grade}
                                         label="Grade"
                                         onChange={onChange_grade}
+                                        style = {{
+                                            width: '200px',
+                                        }
+                                        }
                                     >
 
                                         <MenuItem value="A">A</MenuItem>
@@ -223,7 +242,7 @@ export default function Grades_page() {
                                 </FormControl><br></br><br />
                             
                                 <TextField
-                                    style={{ width: "400px", margin: "5px" }}
+                                    style={{ width: "400px", margin: "20px" }}
                                     type="text"
                                     label="Comments"
                                     variant="outlined"
@@ -236,22 +255,22 @@ export default function Grades_page() {
                                     onChange={onChangecomment}
                                 />
                                 <br /><br></br>
-                                <Button variant="contained" color="primary" onClick={addGrade}>
+                                <Button variant="contained" color="primary" onClick={addGrade} style = {{
+                                    marginBottom: '20px',
+                                }}>
                                     Submit
                                 </Button>
                             </form>
 
-                        </>
-                    ) : (<></>)
-
-
-                }
+                        </Dialog>
             </div>
             {all_grades === "" ? (<> No grades done </>) : (<>
-                <h2 align="center">Your Given Grades</h2>
                 {all_grades.map(item => (
                     <>
-                        <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+                        <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }} style = {{
+                            opacity: 0.8,
+                            backgroundColor: '#e5d7f5',
+                        }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm container>
                                     <Grid item xs container direction="column" spacing={2}>
@@ -270,8 +289,11 @@ export default function Grades_page() {
                                 </Grid>
                             </Grid>
                         </Paper>
+                        <br></br>
                     </>
                 ))}
             </>)}
-        </>)
+        </>
+        </div>
+        );
 }
