@@ -21,7 +21,9 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-
+import Sidebar from "../templates/Parent_Sidebar";
+import backgroundImage from "../images/therapist.jpg";
+import Dialog from "@material-ui/core/Dialog";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function Parent_home() {
@@ -76,41 +78,26 @@ export default function Parent_home() {
 
 
   return (
+    <div style = {{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        height: '100vh',
+        width: '100vw',
+        overflow: 'hidden',
+      }}
+      >
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ cursor: "pointer" }}
-              onClick={() => window.location.href = "/"}
-            >
-              Parent Portal
-            </Typography>
-            <Box sx={{ flexGrow: 1 }} />
-            <Button color="inherit" onClick={() => window.location.href = "/p_home"}>
-              Home
-            </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/p_my_therapist"}>
-              My Therapists
-            </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/p_message"}>
-              Messages
-            </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/p_grades"}>
-              Grades
-            </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/register"}>
-              Register
-            </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/signin"}>
-              Logout
-            </Button>
-          </Toolbar>
-        </AppBar>
-      </Box><br></br><br></br>
-      <h1 align = "center">Parent Dashboard</h1>
+      <Sidebar />
+
+      </Box><br></br>
+      <h1 align = "center" style = {{
+        color: '#986cab',
+        fontSize: '30px',
+        fontFamily: 'Montserrat',
+      }}>Parent Dashboard</h1>
       <div className="App" align="center">
       <Button
                     type="submit"
@@ -118,6 +105,9 @@ export default function Parent_home() {
                     variant="contained"
                     sx={{ mt: 3, mb: 3 }}
                     onClick={change_isadd}
+                    style = {{
+                        backgroundColor: '#3f51b5',
+                    }}
                 >
                     Select Therapist
                 </Button>
@@ -157,10 +147,19 @@ export default function Parent_home() {
 
                 }</div>
       {all_therapists === "" ? (<> No therapists </>) : (<>
-                <h2 align = "center">Available Therapists</h2>
+                <h2 align = "center" style = {{
+        color: '#986cab',
+        fontSize: '30px',
+        fontFamily: 'Montserrat',
+      }}>Available Therapists</h2>
                 {all_therapists.map(item => (
                     <>
-                        <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+                        <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}
+                        style={{
+                            opacity: 0.8,
+                            backgroundColor: "#e5d7f5",
+                          }}
+                          >
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm container>
                                     <Grid item xs container direction="column" spacing={2}>
@@ -179,9 +178,11 @@ export default function Parent_home() {
                                 </Grid>
                             </Grid>
                         </Paper>
+                        <br></br>
                     </>
                 ))}
             </>)}
     </>
+    </div>
   );
 }
