@@ -29,6 +29,23 @@ export default function Therapist_home() {
     window.location.href = "/signin";
   }
 
+  const [all_links, set_all_links] = useState([]);
+  const [child_detail, set_child_detail] = useState([]);
+
+  useEffect(() => {
+    const therapist_info = {
+      Therapist_id: String(localStorage.getItem("id")),
+    };
+    axios
+      .post("http://localhost:4000/link/get_children", therapist_info).then((response) => {
+        if (response.status == 200) {
+          set_all_links(response.data);
+          console.log(all_links);
+        }
+      });
+
+  }, []);
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -47,8 +64,11 @@ export default function Therapist_home() {
               Home
             </Button>
             <Button color="inherit" onClick={() => window.location.href = "/t_grade"}>
-                            Grade
-                        </Button>
+              Grade
+            </Button>
+            <Button color="inherit" onClick={() => window.location.href = "/t_message"}>
+              Messages
+            </Button>
             <Button color="inherit" onClick={() => window.location.href = "/t_activity"}>
               Activities
             </Button>
@@ -61,8 +81,27 @@ export default function Therapist_home() {
           </Toolbar>
         </AppBar>
       </Box><br></br><br></br>
-      <h1 align = "center">Therapist Dashboard</h1>
-      
+      <h1 align="center">My Children</h1>
+      <div className="App" align="center">
+        {all_links === "" ? (<> No therapists </>) : (<>
+          {all_links.map(item => (
+            <>
+              <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography gutterBottom variant="subtitle1" component="div">
+                          Child Name : {item["Child_name"]}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </>
+          ))}
+        </>)}</div>
     </>
   );
 }

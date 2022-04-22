@@ -9,6 +9,9 @@ import Parent_home from "./components/Parent/p_home";
 import Activities_page from "./components/Therapist/t_activity";
 import Grades_page from "./components/Therapist/t_grade";
 import Parent_therapist from "./components/Parent/p_my_therapist";
+import Parent_grades_page from "./components/Parent/p_grades";
+import Parent_message_page from "./components/Parent/p_message";
+import Therapist_message_page from "./components/Therapist/t_message";
 const Layout = () => {
   return (
     <div>
@@ -32,6 +35,9 @@ function App() {
           <Route path="t_activity" element={<Activities_page />} />
           <Route path="t_grade" element={<Grades_page />} />
           <Route path="p_my_therapist" element={<Parent_therapist />} />
+          <Route path="p_grades" element={<Parent_grades_page />} />
+          <Route path="p_message" element={<Parent_message_page />} />
+          <Route path="t_message" element={<Therapist_message_page />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -25,95 +25,78 @@ import { FormControlLabel } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import { Checkbox } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-export default function Activities_page() {
-    if (localStorage.getItem("id") === null || localStorage.getItem("choice") != "Therapist") {
+export default function Parent_message_page() {
+    if (localStorage.getItem("id") === null || localStorage.getItem("choice") != "Parent") {
         window.location.href = "/signin";
     }
 
-    const [is_add, set_isadd] = useState(false);
 
-    const [Name, setName] = useState("");
-    const [Description, setDescription] = useState("");
-    const [Intensity, setIntensity] = useState("");
-    const [all_activity, set_all_activity] = useState([]);
+    const [Message_text, set_Message] = useState("");
+    const [current_therapist_name, set_therapist_name] = useState("");
+    const [all_messages, set_all_messages] = useState([]);
+    const [is_add, set_isadd] = useState(false);
+    const [all_links, set_all_links] = useState([]);
     const change_isadd = (event) => {
         set_isadd(true);
     };
-    const onChangeintensity = (event) => {
-        setIntensity(event.target.value);
-    };
-    const onChangeName = (event) => {
-        setName(event.target.value);
-    };
-    const onChangeDescription = (event) => {
-        setDescription(event.target.value);
-    };
 
-    const addActivity = (event) => {
+    const onChangetherapist = (e) => {
+        set_therapist_name(e.target.value);
+    }
+
+    const onChangemessage = (e) => {
+        set_Message(e.target.value);
+    }
+
+
+    const addMessage = (event) => {
         event.preventDefault();
-        const new_activity = {
-            Therapist_id: String(localStorage.getItem("id")),
-            Name: Name,
-            Description: Description,
-            Intensity: Intensity,
+        const new_message = {
+            Parent_id: String(localStorage.getItem("id")),
+            Therapist_name: current_therapist_name,
+            Message_text: Message_text,
         };
 
         axios
-            .post("http://localhost:4000/activity/create_activity", new_activity)
+            .post("http://localhost:4000/message/add_message", new_message)
             .then((response) => {
                 if (response.status == 404) {
-                    alert("Already Exists");
+                    alert("Error");
                 }
                 else if (response.status == 200) {
-                    alert("Activity Added");
+                    alert("Message sent");
                 }
                 else {
-                    alert("Error adding activity");
-                    console.log(new_activity)
+                    alert("Error sending message");
+                    console.log(new_message);
                 }
                 window.location.reload();
             });
     };
 
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'Activity', headerName: 'Activity', width: 130 },
-        { field: 'Intensity', headerName: 'Intensity', width: 130 },
-        {
-            field: 'Description',
-            headerName: 'Description',
-            description: 'This column has a value getter and is not sortable.',
-            sortable: false,
-            width: 160,
-        },
-    ];
-    let rows = []
     useEffect(() => {
 
-        const therapist_detail = {
-            Therapist_id: String(localStorage.getItem("id")),
+        const Parent_detail = {
+            Parent_id: String(localStorage.getItem("id")),
         };
 
         axios
-            .post("http://localhost:4000/activity/get_activity",therapist_detail)
+            .post("http://localhost:4000/message/get_parent_messages", Parent_detail)
             .then((response) => {
                 if (response.status == 200) {
-                    set_all_activity(response.data);
+                    set_all_messages(response.data);
+                    console.log(all_messages);
+                }
+            });
+
+        axios
+            .post("http://localhost:4000/link/get_therapists", Parent_detail).then((response) => {
+                if (response.status == 200) {
+                    set_all_links(response.data);
+                    console.log(all_links);
                 }
             });
     }, []);
-
-    //   const rows = [
-    //     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    //     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    //     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    //     { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    //     { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    //     { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    //     { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    //     { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    //     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    //   ];
 
     return (
         <>
@@ -126,20 +109,20 @@ export default function Activities_page() {
                             sx={{ cursor: "pointer" }}
                             onClick={() => window.location.href = "/"}
                         >
-                            Therapist Portal
+                            Parent Portal
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
-                        <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
+                        <Button color="inherit" onClick={() => window.location.href = "/p_home"}>
                             Home
                         </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/t_grade"}>
-                            Grade
+                        <Button color="inherit" onClick={() => window.location.href = "/p_my_therapist"}>
+                            My Therapists
                         </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/t_message"}>
+                        <Button color="inherit" onClick={() => window.location.href = "/p_message"}>
                             Messages
                         </Button>
-                        <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
-                            Activities
+                        <Button color="inherit" onClick={() => window.location.href = "/p_grades"}>
+                            Grades
                         </Button>
                         <Button color="inherit" onClick={() => window.location.href = "/register"}>
                             Register
@@ -158,62 +141,48 @@ export default function Activities_page() {
                     sx={{ mt: 3, mb: 3 }}
                     onClick={change_isadd}
                 >
-                    Add Activity
+                    Compose Message
                 </Button>
                 {is_add == true ?
                     (
                         <>
                             <br></br>
 
-                            <Typography variant="h5">NEW ACTIVITY</Typography>
+                            <Typography variant="h5">Compose Message</Typography>
                             <form>
+                                <br /><br />
 
-                                <br />
-                                <TextField
-                                    style={{ width: "200px", margin: "5px" }}
-                                    type="text"
-                                    label="Name"
-                                    variant="outlined"
-                                    id="email"
-
-                                    name="Name"
-                                    autoComplete="Name"
-                                    autoFocus
-                                    value={Name}
-                                    onChange={onChangeName}
-                                />
                                 <br /><br />
                                 <FormControl>
-                                    <InputLabel id="demo-simple-select-label">Intensity</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">Therapist</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={Intensity}
-                                        label="Intensity"
-                                        onChange={onChangeintensity}
+                                        value={current_therapist_name}
+                                        label="Therapist"
+                                        onChange={onChangetherapist}
                                     >
-                                        <MenuItem value="Low">Low</MenuItem>
-                                        <MenuItem value="Moderate">Moderate</MenuItem>
-                                        <MenuItem value="High">High</MenuItem>
+                                        {all_links.map(item => (
+                                            <MenuItem value={item["Therapist_name"]}>{item["Therapist_name"]}</MenuItem>
+                                        ))}
                                     </Select>
-                                </FormControl>
-                                <br /><br />
+                                </FormControl><br></br><br />
                                 <TextField
                                     style={{ width: "400px", margin: "5px" }}
                                     type="text"
-                                    label="Description of Activity"
+                                    label="Message"
                                     variant="outlined"
                                     multiline
                                     rows={5}
-                                    name="Description"
-                                    autoComplete="Description of Activity"
+                                    name="Message"
+                                    autoComplete="Type the message"
                                     autoFocus
-                                    value={Description}
-                                    onChange={onChangeDescription}
+                                    value={Message_text}
+                                    onChange={onChangemessage}
                                 />
-                                <br />
-                                <Button variant="contained" color="primary" onClick={addActivity}>
-                                    Submit
+                                <br /><br></br>
+                                <Button variant="contained" color="primary" onClick={addMessage}>
+                                    Send Message
                                 </Button>
                             </form>
 
@@ -223,9 +192,9 @@ export default function Activities_page() {
 
                 }
             </div>
-            {all_activity === "" ? (<></>) : (<>
-
-                {all_activity.map(item => (
+            {all_messages === "" ? (<> No messages </>) : (<>
+                <h2 align="center">Your messages</h2>
+                {all_messages.map(item => (
                     <>
                         <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
                             <Grid container spacing={2}>
@@ -233,14 +202,13 @@ export default function Activities_page() {
                                     <Grid item xs container direction="column" spacing={2}>
                                         <Grid item xs>
                                             <Typography gutterBottom variant="subtitle1" component="div">
-                                                Name : {item["Name"]}
+                                                To : {item["Therapist_name"]}
                                             </Typography>
                                             <Typography variant="body2" gutterBottom>
-                                                Intensity : {item["Intensity"]}
+                                                Message : {item["Message_text"]}
                                             </Typography>
-
-                                            <Typography variant="body2" color="text.secondary">
-                                                Description : {item["Description"]}
+                                            <Typography variant="body2" gutterBottom>
+                                                Reply : {item["Reply_text"]}
                                             </Typography>
                                         </Grid>
                                     </Grid>

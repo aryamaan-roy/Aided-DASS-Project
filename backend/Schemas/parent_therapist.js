@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 const parent_link = new Schema(
     {
         Parent_id:String,
-        Therapist_id:String
+        Therapist_id:String,
+        Therapist_name:String,
+        Child_name:String,
     }
 )
 

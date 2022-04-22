@@ -14,6 +14,7 @@ const Display = require('./Routes/display')
 const Activity = require('./Routes/activity')
 const Grade = require('./Routes/grade')
 const Link = require('./Routes/parent_therapist')
+const Message = require('./Routes/messages')
 mongoose.connect("mongodb://localhost:27017/Aided-Database",{
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -34,3 +35,4 @@ app.use("/",Display)
 app.use("/activity",Activity)
 app.use("/grade",Grade)
 app.use("/link",Link)
+app.use("/message",Message)

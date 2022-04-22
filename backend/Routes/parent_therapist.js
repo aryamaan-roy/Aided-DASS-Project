@@ -19,9 +19,18 @@ router.post("/add_link", (req, res) => {
                     if (found_link) {
                         return res.status(404).send("Therapist already chosen");
                     } else {
+                        Parents.findOne({ _id: Parent_id }, (err, parent) => {
+                            if (err) {
+                                return res.status(400).send(err);
+                            } else {
+                                if (parent) {
+
                         const new_link = new Parent_link({
-                            Therapist_id,
-                            Parent_id
+                            Therapist_id : String(therapist._id),
+                            Parent_id,
+                            Therapist_name,
+                            Child_name: parent.Child_name,
+
                         })
                         new_link.save(err => {
                             if (err) {
@@ -30,6 +39,7 @@ router.post("/add_link", (req, res) => {
                                 return res.status(200).send("Therapist chosen successfully")
                             }
                         })
+                    }}})
                     }
                 })
             }
@@ -51,10 +61,36 @@ router.post("/get_therapists", (req, res) => {
             }
         }
     });
+});
+
+router.post("/get_children", (req, res) => {
+    const { Therapist_id} = req.body;
+    Parent_link.find({ Therapist_id: Therapist_id }, (err, link) => {
+        if (err) {
+            return res.status(400).send(err);
+        } else {
+            if (link) {
+                return res.status(200).json(link);
+            }
+        }
+    });
 
     
    
 });
+router.post("/get_therapist_detail", (req, res) => {
+    const { Therapist_id} = req.body;
+    Therapist.find({ _id: Therapist_id }, (err, therapist) => {
+        if (err) {
+            return res.status(400).send(err);
+        } else {
+            if (therapist) {
+                return res.status(200).json(therapist);
+            }
+        }
+    });
+  });
+  
 
 
 module.exports = router;

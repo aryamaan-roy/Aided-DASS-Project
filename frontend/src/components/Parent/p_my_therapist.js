@@ -29,7 +29,7 @@ export default function Parent_my_therapists() {
     window.location.href = "/signin";
   }
 
-  const [all_therapists, set_all_therapists] = useState([]);
+  const [all_links, set_all_links] = useState([]);
   useEffect(() => {
     const parent_info = {
       Parent_id: String(localStorage.getItem("id")),
@@ -37,14 +37,12 @@ export default function Parent_my_therapists() {
     axios
     .post("http://localhost:4000/link/get_therapists",parent_info).then((response) => {
         if (response.status == 200) {
-            set_all_therapists(response.data);
-            console.log(all_therapists);
+            set_all_links(response.data);
+            console.log(all_links);
         }
     });
 
 }, []);
-
-  
 
 
   return (
@@ -67,7 +65,10 @@ export default function Parent_my_therapists() {
             <Button color="inherit" onClick={() => window.location.href = "/p_my_therapist"}>
               My Therapists
             </Button>
-            <Button color="inherit" onClick={() => window.location.href = "/p_home"}>
+            <Button color="inherit" onClick={() => window.location.href = "/p_message"}>
+              Messages
+            </Button>
+            <Button color="inherit" onClick={() => window.location.href = "/p_grades"}>
               Grades
             </Button>
             <Button color="inherit" onClick={() => window.location.href = "/register"}>
@@ -81,8 +82,8 @@ export default function Parent_my_therapists() {
       </Box><br></br><br></br>
       <h1 align = "center">My Chosen Therapists</h1>
       <div className="App" align="center">
-      {all_therapists === "" ? (<> No therapists </>) : (<>
-                {all_therapists.map(item => (
+      {all_links === "" ? (<> No therapists </>) : (<>
+                {all_links.map(item => (
                     <>
                         <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
                             <Grid container spacing={2}>
@@ -90,13 +91,7 @@ export default function Parent_my_therapists() {
                                     <Grid item xs container direction="column" spacing={2}>
                                         <Grid item xs>
                                             <Typography gutterBottom variant="subtitle1" component="div">
-                                                Name : {item["Name"]}
-                                            </Typography>
-                                            <Typography variant="body2" gutterBottom>
-                                                Qualification : {item["Qualification"]}
-                                            </Typography>
-                                            <Typography variant="body2" gutterBottom>
-                                                Experience : {item["Experience"]}
+                                                Therapist Name : {item["Therapist_name"]}
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -109,3 +104,4 @@ export default function Parent_my_therapists() {
     </>
   );
 }
+

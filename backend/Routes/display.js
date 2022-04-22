@@ -4,7 +4,7 @@ const Therapist = require("./../Schemas/therapist");
 const Parents = require("./../Schemas/parents");
 const Activities = require("./../Schemas/activity");
 const Parent_link = require("./../Schemas/parent_therapist");
-
+const Message = require("./../Schemas/messages");
 router.get("/p", function (req, res) {
     Parents.find(function (err, users) {
         if (err) {
@@ -52,6 +52,16 @@ router.get("/p", function (req, res) {
                 return res.status(404).send("Unable to get parent_links");
             } else {
                 return res.status(200).json(parent_links);
+            }
+        })
+    });
+    router.get("/message", function (req, res) {
+        Message.find(function (err, messages) {
+            if (err) {
+                console.log(err);
+                return res.status(404).send("Unable to get messages");
+            } else {
+                return res.status(200).json(messages);
             }
         })
     });

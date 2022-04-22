@@ -32,8 +32,8 @@ export default function Grades_page() {
 
     const [all_activity, set_all_activity] = useState([]);
     const [all_children, set_all_children] = useState([]);
-    
-    
+
+
     const [Comment_text, set_Comment] = useState("");
     const [grade, set_grade] = useState("");
     const [current_child_name, set_child_name] = useState("");
@@ -56,16 +56,19 @@ export default function Grades_page() {
     const onChange_grade = (e) => {
         set_grade(e.target.value);
     }
+    const onChangecomment = (e) => {
+        set_Comment(e.target.value);
+    }
 
 
     const addGrade = (event) => {
         event.preventDefault();
         const new_grade = {
             Therapist_id: String(localStorage.getItem("id")),
-            grade_letter : grade,
-            Activity_name : current_activity_name,
-            Child_name : current_child_name,
-            Comment_text : Comment_text,
+            grade_letter: grade,
+            Activity_name: current_activity_name,
+            Child_name: current_child_name,
+            Comment_text: Comment_text,
         };
 
         axios
@@ -84,7 +87,7 @@ export default function Grades_page() {
                 window.location.reload();
             });
     };
-    
+
     useEffect(() => {
 
         const therapist_detail = {
@@ -92,7 +95,7 @@ export default function Grades_page() {
         };
 
         axios
-            .post("http://localhost:4000/grade/get_grade",therapist_detail)
+            .post("http://localhost:4000/grade/get_grade", therapist_detail)
             .then((response) => {
                 if (response.status == 200) {
                     set_all_grades(response.data);
@@ -101,15 +104,15 @@ export default function Grades_page() {
             });
 
         axios
-        .get("http://localhost:4000/p").then((response) => {
-            if (response.status == 200) {
-                set_all_children(response.data);
-                console.log(all_children)
-            }
-        });
+            .post("http://localhost:4000/link/get_children", therapist_detail).then((response) => {
+                if (response.status == 200) {
+                    set_all_children(response.data);
+                    console.log(all_children)
+                }
+            });
 
         axios
-            .post("http://localhost:4000/activity/get_activity",therapist_detail)
+            .post("http://localhost:4000/activity/get_activity", therapist_detail)
             .then((response) => {
                 if (response.status == 200) {
                     set_all_activity(response.data);
@@ -137,6 +140,9 @@ export default function Grades_page() {
                         </Button>
                         <Button color="inherit" onClick={() => window.location.href = "/t_grade"}>
                             Grade
+                        </Button>
+                        <Button color="inherit" onClick={() => window.location.href = "/t_message"}>
+                            Messages
                         </Button>
                         <Button color="inherit" onClick={() => window.location.href = "/t_home"}>
                             Activities
@@ -178,9 +184,9 @@ export default function Grades_page() {
                                         onChange={onChange_child}
                                         fullWidth
                                     >
-                                         {all_children.map(child=> (
-                                        <MenuItem value={child["Child_name"]}>{child["Child_name"]}</MenuItem>
-                                         ))}
+                                        {all_children.map(child => (
+                                            <MenuItem value={child["Child_name"]}>{child["Child_name"]}</MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                                 <br /><br />
@@ -193,9 +199,9 @@ export default function Grades_page() {
                                         label="Activity"
                                         onChange={onChange_activity}
                                     >
-                                         {all_activity.map(activity=> (
-                                        <MenuItem value={activity["Name"]}>{activity["Name"]}</MenuItem>
-                                         ))}
+                                        {all_activity.map(activity => (
+                                            <MenuItem value={activity["Name"]}>{activity["Name"]}</MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                                 <br /><br />
@@ -208,13 +214,28 @@ export default function Grades_page() {
                                         label="Grade"
                                         onChange={onChange_grade}
                                     >
-                                         
+
                                         <MenuItem value="A">A</MenuItem>
                                         <MenuItem value="B">B</MenuItem>
                                         <MenuItem value="C">C</MenuItem>
                                         <MenuItem value="D">D</MenuItem>
                                     </Select>
-                                </FormControl><br></br><br></br>
+                                </FormControl><br></br><br />
+                            
+                                <TextField
+                                    style={{ width: "400px", margin: "5px" }}
+                                    type="text"
+                                    label="Comments"
+                                    variant="outlined"
+                                    multiline
+                                    rows={5}
+                                    name="Comments"
+                                    autoComplete="Add some Comment"
+                                    autoFocus
+                                    value={Comment_text}
+                                    onChange={onChangecomment}
+                                />
+                                <br /><br></br>
                                 <Button variant="contained" color="primary" onClick={addGrade}>
                                     Submit
                                 </Button>
@@ -227,7 +248,7 @@ export default function Grades_page() {
                 }
             </div>
             {all_grades === "" ? (<> No grades done </>) : (<>
-                <h2 align = "center">Your Given Grades</h2>
+                <h2 align="center">Your Given Grades</h2>
                 {all_grades.map(item => (
                     <>
                         <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>

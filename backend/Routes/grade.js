@@ -28,6 +28,26 @@ router.post("/get_grade", (req, res) => {
     
 });
 
+router.post("/get_child_grade", (req, res) => {
+    const { Parent_id } = req.body;
+    Parents.findOne({ _id: String(Parent_id) }, (err, Parent) => {
+        if (err) {
+            return res.status(400).send(err);
+        } else {
+            if (Parent) {
+                Grade.find({ Child_name: Parent.Child_name }, (err, grade) => {
+                    if (err) {
+                        return res.send(err);
+                    } else {
+                        return res.status(200).json(grade);
+                    }
+                });
+            }
+        }
+    });
+    
+});
+
 
 router.post("/add_grade", (req, res) => {
     const {
@@ -43,32 +63,32 @@ router.post("/add_grade", (req, res) => {
             return res.status(400).send(err);
         } else {
             if (therapist) {
-                Therapist_name = therapist.Name;
+                Grade.findOne({ Child_name: Child_name, Therapist_name: therapist.Name, Activity_name: Activity_name }, (err, found_grade) => {
+                    if (found_grade) {
+                        return res.status(404).send("Grade already given")
+                    } else {
+                        const new_grade = new Grade({
+                            Therapist_name : therapist.Name,
+                            grade_letter,
+                            Activity_name,
+                            Child_name,
+                            Comment_text,
+                        })
+                        new_grade.save(err => {
+                            if (err) {
+                                return res.status(400).send(err)
+                            } else {
+                                return res.status(200).send("Grade added successfully")
+                            }
+                        })
+                    }
+                })
             }
         }
     });
 
 
-    Grade.findOne({ Child_name: Child_name, Therapist_name: Therapist_name, Activity_name: Activity_name }, (err, found_grade) => {
-        if (found_grade) {
-            return res.status(404).send("Grade already given")
-        } else {
-            const new_grade = new Grade({
-                Therapist_name,
-                grade_letter,
-                Activity_name,
-                Child_name,
-                Comment_text,
-            })
-            new_grade.save(err => {
-                if (err) {
-                    return res.status(400).send(err)
-                } else {
-                    return res.status(200).send("Grade added successfully")
-                }
-            })
-        }
-    })
+    
 })
 
 module.exports = router;
