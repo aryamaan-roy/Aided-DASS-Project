@@ -75,7 +75,7 @@ export default function Grades_page() {
         };
 
         axios
-            .post("http://localhost:4000/grade/add_grade", new_grade)
+            .post("/api/grade/add_grade", new_grade)
             .then((response) => {
                 if (response.status == 404) {
                     alert("Already Exists");
@@ -100,7 +100,7 @@ export default function Grades_page() {
         };
 
         axios
-            .post("http://localhost:4000/grade/get_grade", therapist_detail)
+            .post("/api/grade/get_grade", therapist_detail)
             .then((response) => {
                 if (response.status == 200) {
                     set_all_grades(response.data);
@@ -109,7 +109,7 @@ export default function Grades_page() {
             });
 
         axios
-            .post("http://localhost:4000/link/get_children", therapist_detail).then((response) => {
+            .post("/api/link/get_children", therapist_detail).then((response) => {
                 if (response.status == 200) {
                     set_all_children(response.data);
                     console.log(all_children)
@@ -117,7 +117,7 @@ export default function Grades_page() {
             });
 
         axios
-            .post("http://localhost:4000/activity/get_activity", therapist_detail)
+            .post("/api/activity/get_activity", therapist_detail)
             .then((response) => {
                 if (response.status == 200) {
                     set_all_activity(response.data);

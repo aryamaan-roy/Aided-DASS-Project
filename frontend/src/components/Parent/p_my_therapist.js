@@ -37,7 +37,7 @@ export default function Parent_my_therapists() {
       Parent_id: String(localStorage.getItem("id")),
   };
     axios
-    .post("http://localhost:4000/link/get_therapists",parent_info).then((response) => {
+    .post("/api/link/get_therapists",parent_info).then((response) => {
         if (response.status == 200) {
             set_all_links(response.data);
             console.log(all_links);

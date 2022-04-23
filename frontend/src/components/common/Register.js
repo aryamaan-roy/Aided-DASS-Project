@@ -56,7 +56,7 @@ const Userform = (props) => {
 
       console.log(newParent);
       axios
-        .post("http://localhost:4000/register/register-parents", newParent)
+        .post("/api/register/register-parents", newParent)
         .then((response) => {
           alert(String(response.data));
         });
@@ -73,7 +73,7 @@ const Userform = (props) => {
 
       console.log(newTherapist);
       axios
-        .post("http://localhost:4000/register/register-therapist", newTherapist)
+        .post("/api/register/register-therapist", newTherapist)
         .then((response) => {
           alert(response.data);
         });
@@ -352,7 +352,7 @@ const Userform = (props) => {
 //     };
 
 //     axios
-//       .post("http://localhost:4000/user/register", newUser)
+//       .post("/api/user/register", newUser)
 //       .then((response) => {
 //         alert("Created\t" + response.data.name);
 //         console.log(response.data);

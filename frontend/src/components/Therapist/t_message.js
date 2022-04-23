@@ -59,7 +59,7 @@ export default function Therapist_message_page() {
 
     axios
       .post(
-        "http://localhost:4000/message/get_therapist_messages",
+        "/api/message/get_therapist_messages",
         Therapist_detail
       )
       .then((response) => {

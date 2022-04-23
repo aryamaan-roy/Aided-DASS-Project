@@ -44,7 +44,7 @@ export default function Parent_grades_page() {
         };
 
         axios
-            .post("http://localhost:4000/grade/get_child_grade", parent_detail)
+            .post("/api/grade/get_child_grade", parent_detail)
             .then((response) => {
                 if (response.status == 200) {
                     set_all_grades(response.data);

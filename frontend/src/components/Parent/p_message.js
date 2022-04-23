@@ -62,7 +62,7 @@ export default function Parent_message_page() {
     };
 
     axios
-      .post("http://localhost:4000/message/add_message", new_message)
+      .post("/api/message/add_message", new_message)
       .then((response) => {
         if (response.status == 404) {
           alert("Error");
@@ -82,7 +82,7 @@ export default function Parent_message_page() {
     };
 
     axios
-      .post("http://localhost:4000/message/get_parent_messages", Parent_detail)
+      .post("/api/message/get_parent_messages", Parent_detail)
       .then((response) => {
         if (response.status == 200) {
           set_all_messages(response.data);
@@ -91,7 +91,7 @@ export default function Parent_message_page() {
       });
 
     axios
-      .post("http://localhost:4000/link/get_therapists", Parent_detail)
+      .post("/api/link/get_therapists", Parent_detail)
       .then((response) => {
         if (response.status == 200) {
           set_all_links(response.data);

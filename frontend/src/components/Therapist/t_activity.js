@@ -66,7 +66,7 @@ export default function Activities_page() {
         };
         
         axios
-        .post("http://localhost:4000/activity/create_activity", new_activity)
+        .post("/api/activity/create_activity", new_activity)
         .then((response) => {
             if (response.status == 404) {
                 alert("Already Exists");
@@ -100,7 +100,7 @@ export default function Activities_page() {
     };
 
     axios
-      .post("http://localhost:4000/activity/get_activity", therapist_detail)
+      .post("/api/activity/get_activity", therapist_detail)
       .then((response) => {
         if (response.status == 200) {
           set_all_activity(response.data);

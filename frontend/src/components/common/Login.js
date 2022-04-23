@@ -42,7 +42,7 @@ export default function SignInSide() {
     console.log(newUser);
 
     axios
-        .post("http://localhost:4000/login", newUser)
+        .post("/api/login", newUser)
         .then((response) => {
           if (response.status == 404) {
             alert(response.data);

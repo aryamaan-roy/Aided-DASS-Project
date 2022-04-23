@@ -15,7 +15,6 @@ import Parent_grades_page from "./components/Parent/p_grades";
 import Parent_message_page from "./components/Parent/p_message";
 import Therapist_message_page from "./components/Therapist/t_message";
 
-
 const Layout = () => {
   if (localStorage.getItem("id")) {
     return (

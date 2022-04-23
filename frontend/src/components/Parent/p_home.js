@@ -44,7 +44,7 @@ export default function Parent_home() {
     };
   useEffect(() => {
     axios
-    .get("http://localhost:4000/t").then((response) => {
+    .get("/api/t").then((response) => {
         if (response.status == 200) {
             set_all_therapists(response.data);
             console.log(all_therapists);
@@ -59,7 +59,7 @@ export default function Parent_home() {
       Therapist_name : therapist_name
   };
   axios
-            .post("http://localhost:4000/link/add_link", new_link)
+            .post("/api/link/add_link", new_link)
             .then((response) => {
                 if (response.status == 404) {
                     alert("Already chosen");
